@@ -35,6 +35,8 @@ public class SsoSuudClient
         Id = p1.Value.Id;
     }
 
+    /* p1: token from client side auth result 
+    returns SsoSuudResponse if success, null if failed */
     public async Task<SsoSuudResponse?> HandleRequest(string p1)
     {
         if (p1.Length < 0)
@@ -172,10 +174,14 @@ public class SsoSuudClientSettings
 
 public class SsoSuudResponse
 {
+    // sso token issue time
     public DateTime ResponseTime;
 
+    // unique user id
     public ObjectId UserId;
+    // username
     public string UserName = "";
+    // link points to user avatar
     public string Avatar = "";
 };
 

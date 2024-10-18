@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const sso_login = async () => {
-  let v2 = new URL(window.location.href).searchParams.get("sso_i");
-  if (typeof v2 != "string" || v2.length === 0) {
+  let token = new URL(window.location.href).searchParams.get("sso_i");
+  if (typeof token != "string" || token.length === 0) {
     return undefined;
   }
-  let v3 = await fetch("/api/signin", {
+  let req = await fetch("/api/signin", {
     "method": "POST",
     "headers": {
       "Content-Type": "text/plain",
     },
-    "body": v2
+    "body": token
   });
-  if (!v3.ok) {
+  if (!req.ok) {
     return undefined;
   }
-  return await v3.json();
+  return await req.json();
 };
 
 const Home = () => {
@@ -29,13 +29,13 @@ const Home = () => {
       return;
     }
     called.current = true;
-    sso_login().then((v1) => {
-      if (typeof v1 != "object") {
+    sso_login().then((result) => {
+      if (typeof result != "object") {
         window.location.assign('/');
         return;
       }
-      setName(v1.n);
-      setAvatar(v1.a);
+      setName(result.n);
+      setAvatar(result.a);
     });
   };
 

@@ -15,17 +15,17 @@ public class SignInController(ILogger<SignInController> p1, SsoSuudClient p2) : 
     public async Task<IActionResult> onPost([FromBody] string req_data)
     {
         // client uploads one-time auth key 
-        var v1 = await this.sso.HandleRequest(req_data);
-        if (null == v1)
+        var req_json = await this.sso.HandleRequest(req_data);
+        if (null == req_json)
         {
             return BadRequest();
         }
-        var v2 = new JsonObject
+        var res_json = new JsonObject
         {
-            ["n"] = v1.UserName,
-            ["a"] = v1.Avatar
+            ["n"] = req_json.UserName,
+            ["a"] = req_json.Avatar
         };
-        return new JsonResult(v2) { ContentType = "application/json" };
+        return new JsonResult(res_json) { ContentType = "application/json" };
     }
 
 }
