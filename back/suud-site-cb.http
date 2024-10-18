@@ -1,0 +1,6 @@
+@suud_site_cb_HostAddress = http://localhost:5259
+
+GET {{suud_site_cb_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
